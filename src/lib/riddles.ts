@@ -1,181 +1,192 @@
-export type RiddleType = 'text' | 'multiple-choice';
+import { RIDDLE_CONFIG } from "../config";
+
+export type RiddleType = "text" | "multiple-choice";
 
 export interface Riddle {
   type: RiddleType;
   question: string;
-  answer?: string; // For text type
-  options?: string[]; // For multiple-choice
-  correctOption?: number; // Index of correct option (0-3)
+  answer?: string;
+  options?: string[];
+  correctOption?: number;
 }
 
-// Testing: Simulate current date as December 12, 2025
-export const TESTING_MODE = false;
-export const SIMULATED_DATE = new Date(2025, 11, 2, 10, 0, 0); // Nov 12, 2025, 10:00 AM
+export const TESTING_MODE = RIDDLE_CONFIG.testingMode;
 
-// Cooldown duration in milliseconds (30 seconds for testing, 1 hour for production)
-export const COOLDOWN_DURATION = TESTING_MODE ? 5 * 1000 : 60 * 60 * 1000;
+export const SIMULATED_DATE = new Date(
+  RIDDLE_CONFIG.simulatedDate.year,
+  RIDDLE_CONFIG.simulatedDate.month - 1,
+  RIDDLE_CONFIG.simulatedDate.day,
+  RIDDLE_CONFIG.simulatedDate.hour,
+  RIDDLE_CONFIG.simulatedDate.minute,
+  0,
+);
+
+export const COOLDOWN_DURATION = TESTING_MODE
+  ? RIDDLE_CONFIG.testingCooldownMs
+  : RIDDLE_CONFIG.cooldownMs;
 
 export const riddles: Record<number, Riddle> = {
   1: {
-    type: 'text',
-    question: 'acertijoDia1',
-    answer: 'test'
+    type: "text",
+    question:
+      "tengo agujas pero no pincho y si me miras te doy la hora. ¿qué soy?",
+    answer: "el reloj",
   },
   2: {
-    type: 'multiple-choice',
-    question: 'acertijoDia2',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿qué tiene cuello pero no cabeza?",
+    options: ["una botella", "un abrigo", "una lámpara", "un río"],
+    correctOption: 0,
   },
   3: {
-    type: 'text',
-    question: 'acertijoDia3',
-    answer: 'test'
+    type: "text",
+    question: "vuela sin alas, llora sin ojos. ¿qué es?",
+    answer: "la nube",
   },
   4: {
-    type: 'multiple-choice',
-    question: 'acertijoDia4',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿cuál es el mes que tiene 28 días?",
+    options: ["solo febrero", "febrero y marzo", "todos los meses", "ninguno"],
+    correctOption: 2,
   },
   5: {
-    type: 'text',
-    question: 'acertijoDia5',
-    answer: 'test'
+    type: "text",
+    question: "se moja mientras seca. ¿qué es?",
+    answer: "la toalla",
   },
   6: {
-    type: 'multiple-choice',
-    question: 'acertijoDia6',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿qué se rompe si lo nombras?",
+    options: ["un globo", "el silencio", "la promesa", "el cristal"],
+    correctOption: 1,
   },
   7: {
-    type: 'text',
-    question: 'acertijoDia7',
-    answer: 'test'
+    type: "text",
+    question: "en la mesa me ponen, pero nunca como. ¿quién soy?",
+    answer: "el mantel",
   },
   8: {
-    type: 'multiple-choice',
-    question: 'acertijoDia8',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿qué sube y baja pero nunca se mueve?",
+    options: ["el ascensor", "las escaleras", "la montaña", "la noria"],
+    correctOption: 1,
   },
   9: {
-    type: 'text',
-    question: 'acertijoDia9',
-    answer: 'test'
+    type: "text",
+    question: "tiene dientes pero no muerde. ¿qué es?",
+    answer: "el peine",
   },
   10: {
-    type: 'multiple-choice',
-    question: 'acertijoDia10',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿quién es hijo de tus padres y no es tu hermano?",
+    options: ["mi primo", "mi tío", "yo", "mi vecino"],
+    correctOption: 2,
   },
   11: {
-    type: 'text',
-    question: 'acertijoDia11',
-    answer: 'test'
+    type: "text",
+    question:
+      "blanca por dentro, verde por fuera. si quieres que te lo diga, espera. ¿qué es?",
+    answer: "la pera",
   },
   12: {
-    type: 'multiple-choice',
-    question: 'De qué color es el caballo blanco de Santiago?',
-    options: ['Negro', 'No tiene caballo', 'Blanco', 'Fuxia'],
-    correctOption: 2
+    type: "multiple-choice",
+    question: "¿qué cosa cuanto más grande es, menos se ve?",
+    options: ["la luz", "la niebla", "el bosque", "la ciudad"],
+    correctOption: 1,
   },
   13: {
-    type: 'text',
-    question: 'acertijoDia13',
-    answer: 'test'
+    type: "text",
+    question:
+      "tengo ciudades pero no casas, tengo montañas pero no árboles. ¿qué soy?",
+    answer: "el mapa",
   },
   14: {
-    type: 'multiple-choice',
-    question: 'acertijoDia14',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿qué puedes atrapar pero no lanzar?",
+    options: ["un resfriado", "una pelota", "un suspiro", "una sonrisa"],
+    correctOption: 0,
   },
   15: {
-    type: 'text',
-    question: 'acertijoDia15',
-    answer: 'test'
+    type: "text",
+    question: "tiene un ojo pero no puede ver. ¿qué es?",
+    answer: "la aguja",
   },
   16: {
-    type: 'multiple-choice',
-    question: 'acertijoDia16',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿qué palabra se escribe incorrectamente en el diccionario?",
+    options: ["ortografía", "incorrectamente", "error", "diccionario"],
+    correctOption: 1,
   },
   17: {
-    type: 'text',
-    question: 'acertijoDia17',
-    answer: 'test'
+    type: "text",
+    question: "cae al río y no se moja. ¿qué es?",
+    answer: "la sombra",
   },
   18: {
-    type: 'multiple-choice',
-    question: 'acertijoDia18',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿qué tiene muchas llaves pero no puede abrir puertas?",
+    options: ["un piano", "una caja fuerte", "un guardián", "un llavero"],
+    correctOption: 0,
   },
   19: {
-    type: 'text',
-    question: 'acertijoDia19',
-    answer: 'test'
+    type: "text",
+    question: "cuanto más me quitas, más grande soy. ¿qué soy?",
+    answer: "un agujero",
   },
   20: {
-    type: 'multiple-choice',
-    question: 'acertijoDia20',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question: "¿qué siempre viene pero nunca llega?",
+    options: ["el ayer", "el amanecer", "el mañana", "el tren"],
+    correctOption: 2,
   },
   21: {
-    type: 'text',
-    question: 'acertijoDia21',
-    answer: 'test'
+    type: "text",
+    question: "corre sin piernas y susurra sin boca. ¿qué es?",
+    answer: "el viento",
   },
   22: {
-    type: 'multiple-choice',
-    question: 'acertijoDia22',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
+    type: "multiple-choice",
+    question:
+      "¿qué número multiplicado por cualquier otro siempre da el mismo resultado?",
+    options: ["uno", "cero", "dos", "diez"],
+    correctOption: 1,
   },
   23: {
-    type: 'text',
-    question: 'acertijoDia23',
-    answer: 'test'
+    type: "text",
+    question: "tiene orejas pero no puede oír. ¿qué es?",
+    answer: "la mazorca",
   },
   24: {
-    type: 'multiple-choice',
-    question: 'acertijoDia24',
-    options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-    correctOption: 0
-  }
+    type: "multiple-choice",
+    question: "¿qué palabra empieza con e, termina con e y solo contiene una letra?",
+    options: ["eje", "sobre", "estrella", "ele"],
+    correctOption: 1,
+  },
 };
 
-// Riddle attempts tracking
-const RIDDLE_ATTEMPTS_KEY = 'advent-riddle-attempts';
-const SOLVED_RIDDLES_KEY = 'advent-solved-riddles';
-const RIDDLE_ANSWERS_LOG_KEY = 'advent-riddle-answers-log';
+const RIDDLE_ATTEMPTS_KEY = "advent-riddle-attempts";
+const SOLVED_RIDDLES_KEY = "advent-solved-riddles";
+const RIDDLE_ANSWERS_LOG_KEY = "advent-riddle-answers-log";
 
-// Device info helper
 function getDeviceInfo(): string {
   const userAgent = navigator.userAgent;
-  let deviceName = 'Desconocido';
-  
+  let deviceName = "Desconocido";
+
   if (/Android/i.test(userAgent)) {
-    deviceName = 'Android';
+    deviceName = "Android";
   } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-    deviceName = 'iOS';
+    deviceName = "iOS";
   } else if (/Windows/i.test(userAgent)) {
-    deviceName = 'Windows';
+    deviceName = "Windows";
   } else if (/Mac/i.test(userAgent)) {
-    deviceName = 'Mac';
+    deviceName = "Mac";
   } else if (/Linux/i.test(userAgent)) {
-    deviceName = 'Linux';
+    deviceName = "Linux";
   }
-  
+
   return deviceName;
 }
 
-// Log answer attempts
 export interface AnswerLog {
   day: number;
   answer: string;
@@ -184,7 +195,11 @@ export interface AnswerLog {
   isCorrect: boolean;
 }
 
-export function logAnswer(day: number, answer: string, isCorrect: boolean): void {
+export function logAnswer(
+  day: number,
+  answer: string,
+  isCorrect: boolean,
+): void {
   try {
     const logs = getAnswerLogs();
     const newLog: AnswerLog = {
@@ -192,12 +207,12 @@ export function logAnswer(day: number, answer: string, isCorrect: boolean): void
       answer,
       device: getDeviceInfo(),
       timestamp: Date.now(),
-      isCorrect
+      isCorrect,
     };
     logs.push(newLog);
     localStorage.setItem(RIDDLE_ANSWERS_LOG_KEY, JSON.stringify(logs));
   } catch (e) {
-    console.error('Error logging answer:', e);
+    console.error("Error logging answer:", e);
   }
 }
 
@@ -212,18 +227,18 @@ export function getAnswerLogs(): AnswerLog[] {
 
 export function exportAnswerLogsAsText(): string {
   const logs = getAnswerLogs();
-  let text = '=== REGISTRO DE RESPUESTAS DEL CALENDARIO DE ADVIENTO ===\n\n';
-  
-  logs.forEach(log => {
+  let text = "=== REGISTRO DE RESPUESTAS DEL CALENDARIO DE ADVIENTO ===\n\n";
+
+  logs.forEach((log) => {
     const date = new Date(log.timestamp);
     text += `Día: ${log.day}\n`;
     text += `Respuesta: ${log.answer}\n`;
     text += `Dispositivo: ${log.device}\n`;
-    text += `Fecha: ${date.toLocaleString('es-ES')}\n`;
-    text += `Correcta: ${log.isCorrect ? 'SÍ' : 'NO'}\n`;
-    text += '---\n\n';
+    text += `Fecha: ${date.toLocaleString("es-ES")}\n`;
+    text += `Correcta: ${log.isCorrect ? "SÍ" : "NO"}\n`;
+    text += "---\n\n";
   });
-  
+
   return text;
 }
 
@@ -249,10 +264,12 @@ export function addFailedAttempt(day: number): void {
 
 export function getCooldownEndTime(day: number): number | null {
   const attempts = getFailedAttempts();
-  const lastAttempt = attempts.filter(a => a.day === day).sort((a, b) => b.failedAt - a.failedAt)[0];
-  
+  const lastAttempt = attempts
+    .filter((a) => a.day === day)
+    .sort((a, b) => b.failedAt - a.failedAt)[0];
+
   if (!lastAttempt) return null;
-  
+
   const cooldownEnd = lastAttempt.failedAt + COOLDOWN_DURATION;
   return Date.now() < cooldownEnd ? cooldownEnd : null;
 }
@@ -276,25 +293,20 @@ export function markAsSolved(day: number): void {
       localStorage.setItem(SOLVED_RIDDLES_KEY, JSON.stringify(solved));
     }
   } catch (e) {
-    console.error('Error marking riddle as solved:', e);
+    console.error("Error marking riddle as solved:", e);
   }
 }
 
-/**
- * Detects if the user is on a mobile device
- */
 export function isMobileDevice(): boolean {
-  return /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry/i.test(navigator.userAgent);
+  return /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry/i.test(
+    navigator.userAgent,
+  );
 }
 
-/**
- * Enables or disables scrolling based on the device type
- */
 export function configureScrolling(): void {
-  const overflowValue = isMobileDevice() ? 'auto' : 'hidden';
+  const overflowValue = isMobileDevice() ? "auto" : "hidden";
   document.body.style.overflow = overflowValue;
   document.documentElement.style.overflow = overflowValue;
 }
 
-// Call this function during initialization
 configureScrolling();
