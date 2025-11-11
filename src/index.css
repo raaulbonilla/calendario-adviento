@@ -2,13 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* Romantic Advent Calendar - Light Theme */
     --background: 210 40% 98%;
     --foreground: 222 47% 11%;
 
@@ -40,7 +35,6 @@ All colors MUST be HSL.
 
     --radius: 1rem;
 
-    /* Custom tokens */
     --locked: 215 16% 47%;
     --unlocked: 0 63% 55%;
     --opened: 142 76% 36%;
@@ -48,22 +42,26 @@ All colors MUST be HSL.
     --success: 142 50% 70%;
     --cooldown: 0 70% 65%;
     --error: 0 84% 60%;
-    
-    /* Gradients */
-    --gradient-romantic: linear-gradient(135deg, hsl(0 63% 55% / 0.1) 0%, hsl(222 33% 27% / 0.05) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
-    
-    /* Shadows */
+
+    --gradient-romantic: linear-gradient(
+      135deg,
+      hsl(0 63% 55% / 0.1) 0%,
+      hsl(222 33% 27% / 0.05) 100%
+    );
+    --gradient-card: linear-gradient(
+      180deg,
+      hsl(0 0% 100%) 0%,
+      hsl(210 40% 98%) 100%
+    );
+
     --shadow-card: 0 2px 8px hsl(222 47% 11% / 0.08);
     --shadow-card-hover: 0 8px 24px hsl(222 47% 11% / 0.12);
     --shadow-modal: 0 24px 64px hsl(222 47% 11% / 0.2);
-    
-    /* Effects */
+
     --blur-backdrop: blur(12px);
   }
 
   .dark {
-    /* Romantic Advent Calendar - Dark Theme */
     --background: 222 47% 5%;
     --foreground: 210 40% 98%;
 
@@ -100,10 +98,18 @@ All colors MUST be HSL.
     --success: 142 50% 70%;
     --cooldown: 0 70% 65%;
     --error: 0 84% 60%;
-    
-    --gradient-romantic: linear-gradient(135deg, hsl(0 63% 55% / 0.15) 0%, hsl(222 33% 27% / 0.1) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(222 47% 8%) 0%, hsl(222 47% 6%) 100%);
-    
+
+    --gradient-romantic: linear-gradient(
+      135deg,
+      hsl(0 63% 55% / 0.15) 0%,
+      hsl(222 33% 27% / 0.1) 100%
+    );
+    --gradient-card: linear-gradient(
+      180deg,
+      hsl(222 47% 8%) 0%,
+      hsl(222 47% 6%) 100%
+    );
+
     --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
     --shadow-card-hover: 0 8px 24px hsl(0 0% 0% / 0.4);
     --shadow-modal: 0 24px 64px hsl(0 0% 0% / 0.6);
@@ -117,7 +123,9 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "kern" 1, "liga" 1;
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1;
   }
 }
 
@@ -125,7 +133,7 @@ All colors MUST be HSL.
   .calendar-card-shadow {
     box-shadow: var(--shadow-card);
   }
-  
+
   .calendar-card-shadow-hover {
     box-shadow: var(--shadow-card-hover);
   }
@@ -142,7 +150,6 @@ All colors MUST be HSL.
     background: var(--gradient-card);
   }
 
-  /* Snow animation */
   @keyframes snowfall {
     0% {
       transform: translateY(-100vh) translateX(0);
@@ -161,7 +168,8 @@ All colors MUST be HSL.
   }
 
   @keyframes bounce-gentle {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
@@ -182,12 +190,13 @@ All colors MUST be HSL.
   }
 
   @keyframes flash-green {
-    0%, 100% { 
-background-color: hsl(var(--success) / 0.3);
+    0%,
+    100% {
+      background-color: hsl(var(--success) / 0.3);
       border-color: hsl(var(--success) / 0.6);
       transform: scale(1);
     }
-    50% { 
+    50% {
       background-color: hsl(var(--success) / 0.5);
       border-color: hsl(var(--success));
       transform: scale(1.05);
@@ -207,7 +216,9 @@ background-color: hsl(var(--success) / 0.3);
   }
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   min-height: 100vh;
   margin: 0;
@@ -216,13 +227,13 @@ html, body, #root {
 
 html,
 body {
-  overflow: hidden; /* sin scroll en escritorio */
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
   html,
   body {
-    overflow-y: auto; /* permite scroll en móvil */
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 }
