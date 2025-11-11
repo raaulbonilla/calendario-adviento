@@ -212,7 +212,7 @@ export function logAnswer(
     logs.push(newLog);
     localStorage.setItem(RIDDLE_ANSWERS_LOG_KEY, JSON.stringify(logs));
   } catch (e) {
-    console.error("Error logging answer:", e);
+    console.error("error al guardar la respuesta:", e);
   }
 }
 
@@ -293,7 +293,7 @@ export function markAsSolved(day: number): void {
       localStorage.setItem(SOLVED_RIDDLES_KEY, JSON.stringify(solved));
     }
   } catch (e) {
-    console.error("Error marking riddle as solved:", e);
+    console.error("error al marcar el acertijo como resuelto:", e);
   }
 }
 

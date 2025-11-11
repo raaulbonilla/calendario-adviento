@@ -229,7 +229,7 @@ export function getStoredSurprises(): Record<number, Surprise> {
       return JSON.parse(stored);
     }
   } catch (e) {
-    console.error("Error loading custom surprises:", e);
+    console.error("error al cargar sorpresas personalizadas:", e);
   }
   return surprises;
 }
@@ -238,7 +238,7 @@ export function saveCustomSurprises(customSurprises: Record<number, Surprise>) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(customSurprises));
   } catch (e) {
-    console.error("Error saving custom surprises:", e);
+    console.error("error al guardar sorpresas personalizadas:", e);
   }
 }
 

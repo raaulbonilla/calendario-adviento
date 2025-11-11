@@ -102,7 +102,7 @@ export function isOpened(day: number): boolean {
       return openedDays.includes(day);
     }
   } catch (e) {
-    console.error("Error checking opened status:", e);
+    console.error("error al comprobar si el día estaba abierto:", e);
   }
   return false;
 }
@@ -116,7 +116,7 @@ export function markAsOpened(day: number): void {
       localStorage.setItem(OPENED_DAYS_KEY, JSON.stringify(openedDays));
     }
   } catch (e) {
-    console.error("Error marking day as opened:", e);
+    console.error("error al marcar el día como abierto:", e);
   }
 }
 
