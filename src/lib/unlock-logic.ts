@@ -1,6 +1,11 @@
-import { DateTime } from 'luxon';
-import { YEAR, TIMEZONE, UNLOCK_HOUR } from './surprises';
-import { TESTING_MODE, SIMULATED_DATE, getCooldownEndTime, isSolved } from './riddles';
+import { DateTime } from "luxon";
+import { CALENDAR_CONFIG } from "../config";
+import {
+  TESTING_MODE,
+  SIMULATED_DATE,
+  getCooldownEndTime,
+  isSolved,
+} from "./riddles";
 
 export interface DayStatus {
   day: number;
@@ -14,49 +19,68 @@ export interface DayStatus {
 
 function getNow(): DateTime {
   if (TESTING_MODE) {
-    return DateTime.fromJSDate(SIMULATED_DATE).setZone(TIMEZONE);
+    return DateTime.fromJSDate(SIMULATED_DATE).setZone(
+      CALENDAR_CONFIG.timezone,
+    );
   }
-  return DateTime.now().setZone(TIMEZONE);
+  return DateTime.now().setZone(CALENDAR_CONFIG.timezone);
 }
 
 export function isUnlocked(day: number, now = getNow()): boolean {
   const target = DateTime.fromObject(
-    { year: YEAR, month: 12, day, hour: UNLOCK_HOUR, minute: 0, second: 0 },
-    { zone: TIMEZONE }
+    {
+      year: CALENDAR_CONFIG.year,
+      month: CALENDAR_CONFIG.month,
+      day,
+      hour: CALENDAR_CONFIG.unlockHour,
+      minute: 0,
+      second: 0,
+    },
+    { zone: CALENDAR_CONFIG.timezone },
   );
-  // Verifica que el mes actual sea diciembre y que la fecha actual sea mayor o igual a la fecha objetivo
-  return now.month === 12 && now >= target;
+  return now.month === CALENDAR_CONFIG.month && now >= target;
 }
 
 export function isToday(day: number, now = getNow()): boolean {
   const target = DateTime.fromObject(
-    { year: YEAR, month: 12, day },
-    { zone: TIMEZONE }
+    { year: CALENDAR_CONFIG.year, month: CALENDAR_CONFIG.month, day },
+    { zone: CALENDAR_CONFIG.timezone },
   );
-  return now.day === target.day && now.month === target.month && now.year === target.year;
+  return (
+    now.day === target.day &&
+    now.month === target.month &&
+    now.year === target.year
+  );
 }
 
 export function getUnlockTime(day: number): DateTime {
   return DateTime.fromObject(
-    { year: YEAR, month: 12, day, hour: UNLOCK_HOUR, minute: 0, second: 0 },
-    { zone: TIMEZONE }
+    {
+      year: CALENDAR_CONFIG.year,
+      month: CALENDAR_CONFIG.month,
+      day,
+      hour: CALENDAR_CONFIG.unlockHour,
+      minute: 0,
+      second: 0,
+    },
+    { zone: CALENDAR_CONFIG.timezone },
   );
 }
 
 export function nextUnlock(now = getNow()): DateTime | null {
-  for (let d = 1; d <= 24; d++) {
+  for (let d = 1; d <= CALENDAR_CONFIG.totalDays; d++) {
     const target = getUnlockTime(d);
     if (now < target) {
       return target;
     }
   }
-  return null; // All days unlocked
+  return null;
 }
 
 export function getDayStatus(day: number): DayStatus {
   const now = getNow();
   const unlockTime = getUnlockTime(day);
-  
+
   return {
     day,
     isUnlocked: isUnlocked(day, now),
@@ -64,12 +88,11 @@ export function getDayStatus(day: number): DayStatus {
     isOpened: isOpened(day),
     unlockTime,
     isSolved: isSolved(day),
-    cooldownEnd: getCooldownEndTime(day)
+    cooldownEnd: getCooldownEndTime(day),
   };
 }
 
-// Persistence
-const OPENED_DAYS_KEY = 'advent-calendar-opened';
+const OPENED_DAYS_KEY = "advent-calendar-opened";
 
 export function isOpened(day: number): boolean {
   try {
@@ -79,7 +102,7 @@ export function isOpened(day: number): boolean {
       return openedDays.includes(day);
     }
   } catch (e) {
-    console.error('Error checking opened status:', e);
+    console.error("Error checking opened status:", e);
   }
   return false;
 }
@@ -93,7 +116,7 @@ export function markAsOpened(day: number): void {
       localStorage.setItem(OPENED_DAYS_KEY, JSON.stringify(openedDays));
     }
   } catch (e) {
-    console.error('Error marking day as opened:', e);
+    console.error("Error marking day as opened:", e);
   }
 }
 
@@ -109,13 +132,13 @@ export function getTimeUntilUnlock(target: DateTime): {
   total: number;
 } {
   const now = getNow();
-  const diff = target.diff(now, ['days', 'hours', 'minutes', 'seconds']);
-  
+  const diff = target.diff(now, ["days", "hours", "minutes", "seconds"]);
+
   return {
     days: Math.floor(diff.days),
     hours: Math.floor(diff.hours % 24),
     minutes: Math.floor(diff.minutes % 60),
     seconds: Math.floor(diff.seconds % 60),
-    total: target.toMillis() - now.toMillis()
+    total: target.toMillis() - now.toMillis(),
   };
 }
